@@ -1,6 +1,6 @@
 package com.example.masato.weatherforecast.api;
 
-import com.example.masato.weatherforecast.model.WeatherEntity;
+import com.example.masato.weatherforecast.model.weather.WeatherEntity;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;

@@ -1,4 +1,4 @@
-package com.example.masato.weatherforecast.model;
+package com.example.masato.weatherforecast.model.weather;
 
 import com.android.annotations.Nullable;
 import com.google.gson.annotations.Expose;

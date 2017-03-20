@@ -8,28 +8,27 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by masato on 17/03/20.
  */
 
-public class WeatherServiceHolder {
+public class WeekWeatherServiceHolder {
 
-    private static WeatherService INSTANCE;
+    private static WeekWeatherService INSTANCE;
 
-    public static WeatherService get() {
+    public static WeekWeatherService get() {
         if (INSTANCE == null) {
             INSTANCE = createInstance();
         }
         return INSTANCE;
     }
 
-    private static WeatherService createInstance() {
-        return retrofit().create(WeatherService.class);
+    private static WeekWeatherService createInstance() {
+        return retrofit().create(WeekWeatherService.class);
     }
 
     private static Retrofit retrofit() {
-        final String ENDPOINT = "http://weather.livedoor.com/";
+        final String ENDPOINT = "https://api.rss2json.com/";
         return new Retrofit.Builder()
                 .baseUrl(ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build();
     }
-
 }

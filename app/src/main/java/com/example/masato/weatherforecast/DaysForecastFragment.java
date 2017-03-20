@@ -8,15 +8,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.masato.weatherforecast.api.WeatherService;
 import com.example.masato.weatherforecast.api.WeatherServiceHolder;
 import com.example.masato.weatherforecast.databinding.FragmentDaysForecastBinding;
-import com.example.masato.weatherforecast.model.Forecasts;
-import com.example.masato.weatherforecast.model.WeatherEntity;
+import com.example.masato.weatherforecast.model.weather.Forecasts;
+import com.example.masato.weatherforecast.model.weather.WeatherEntity;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;

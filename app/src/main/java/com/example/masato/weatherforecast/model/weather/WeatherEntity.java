@@ -1,4 +1,4 @@
-package com.example.masato.weatherforecast.model;
+package com.example.masato.weatherforecast.model.weather;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

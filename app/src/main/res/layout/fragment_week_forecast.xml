@@ -1,16 +1,215 @@
 <layout>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:divider="@layout/divider"
+              android:dividerPadding="20dp"
+              android:showDividers="middle"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.example.masato.weatherforecast.WeekForecastFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/hoge"
-        android:text="@string/hello_blank_fragment"/>
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
 
-</FrameLayout>
+        <ImageView
+            android:id="@+id/image_icon1"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/title1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "hoge"
+            android:layout_toRightOf="@id/image_icon1"/>
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title1"
+            android:layout_toRightOf="@id/image_icon1"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/image_icon2"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/title2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "hoge"
+            android:layout_toRightOf="@id/image_icon2"/>
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title2"
+            android:layout_toRightOf="@id/image_icon2"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/image_icon3"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/title3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "hoge"
+            android:layout_toRightOf="@id/image_icon3"/>
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title3"
+            android:layout_toRightOf="@id/image_icon3"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/image_icon4"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/title4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "hoge"
+            android:layout_toRightOf="@id/image_icon4"/>
+
+        <TextView
+            android:id="@+id/text4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title4"
+            android:layout_toRightOf="@id/image_icon4"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/image_icon5"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/title5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "hoge"
+            android:layout_toRightOf="@id/image_icon5"/>
+
+        <TextView
+            android:id="@+id/text5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title5"
+            android:layout_toRightOf="@id/image_icon5"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/image_icon6"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/title6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "hoge"
+            android:layout_toRightOf="@id/image_icon6"/>
+
+        <TextView
+            android:id="@+id/text6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title6"
+            android:layout_toRightOf="@id/image_icon6"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/image_icon7"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:layout_marginRight="16dp"/>
+
+        <TextView
+            android:id="@+id/title7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "hoge"
+            android:layout_toRightOf="@id/image_icon7"/>
+
+        <TextView
+            android:id="@+id/text7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title7"
+            android:layout_toRightOf="@id/image_icon7"/>
+
+    </RelativeLayout>
+</LinearLayout>
 </layout>
