@@ -24,6 +24,8 @@ public class WeatherForecastActivity extends AppCompatActivity
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_weather_forecast);
 
+        binding.placeTitle.setText("横浜の天気");
+
         TabLayout tabLayout = binding.tabs;
         ViewPager pager = binding.pager;
         final String[] pageTitle = {"3 days", "1 week"};

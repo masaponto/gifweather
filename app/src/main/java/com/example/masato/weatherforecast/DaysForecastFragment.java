@@ -8,8 +8,19 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.example.masato.weatherforecast.api.WeatherService;
+import com.example.masato.weatherforecast.api.WeatherServiceHolder;
 import com.example.masato.weatherforecast.databinding.FragmentDaysForecastBinding;
+import com.example.masato.weatherforecast.model.Forecasts;
+import com.example.masato.weatherforecast.model.WeatherEntity;
+
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -68,12 +79,65 @@ public class DaysForecastFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_days_forecast, container, false);
     }
 
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentDaysForecastBinding.bind(view);
-        binding.fuga.setText("3 days forecast");
+        binding.title1.setText("今日");
+        binding.text1.setText("はれ");
+
+        binding.title2.setText("明日");
+        binding.text2.setText("はれ");
+
+        binding.title3.setText("明後日");
+        binding.text3.setText("はれ");
+
+
+        WeatherServiceHolder.get()
+                .getWeather("140010")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<WeatherEntity>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(WeatherEntity weatherEntity) {
+                        setView(weatherEntity);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
+
+    private void setView(WeatherEntity weatherEntity) {
+        Forecasts oneForecasts = weatherEntity.getForecasts().get(0);
+        Forecasts twoForecasts = weatherEntity.getForecasts().get(1);
+        Forecasts threeForecasts = weatherEntity.getForecasts().get(2);
+
+        binding.title1.setText(oneForecasts.getDataLabel());
+        binding.text1.setText(oneForecasts.getTelop());
+        Glide.with(this.getContext()).load(oneForecasts.getImage().getUrl()).into(binding.imageIcon1);
+
+        binding.title2.setText(twoForecasts.getDataLabel());
+        binding.text2.setText(twoForecasts.getTelop());
+        Glide.with(this.getContext()).load(twoForecasts.getImage().getUrl()).into(binding.imageIcon2);
+
+        binding.title3.setText(threeForecasts.getDataLabel());
+        binding.text3.setText(threeForecasts.getTelop());
+        Glide.with(this.getContext()).load(threeForecasts.getImage().getUrl()).into(binding.imageIcon3);
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
