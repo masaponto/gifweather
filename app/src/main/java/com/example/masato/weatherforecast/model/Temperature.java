@@ -23,16 +23,9 @@ public class Temperature {
         return min;
     }
 
-    public void setMin(Values min) {
-        this.min = min;
-    }
-
     public Values getMax() {
         return max;
     }
 
-    public void setMax(Values max) {
-        this.max = max;
-    }
 }
 

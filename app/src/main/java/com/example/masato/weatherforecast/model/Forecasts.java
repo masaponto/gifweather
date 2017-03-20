@@ -32,39 +32,20 @@ public class Forecasts {
         return dataLabel;
     }
 
-    public void setDataLabel(String dataLabel) {
-        this.dataLabel = dataLabel;
-    }
-
     public String getTelop() {
         return telop;
-    }
-
-    public void setTelop(String telop) {
-        this.telop = telop;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     public Image getImage() {
         return image;
-    }
-
-    public void setImage(Image image) {
-        this.image = image;
     }
 
     public Temperature getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(Temperature temperature) {
-        this.temperature = temperature;
-    }
 }

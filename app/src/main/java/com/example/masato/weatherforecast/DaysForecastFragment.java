@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.masato.weatherforecast.api.WeatherService;
@@ -83,15 +84,6 @@ public class DaysForecastFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentDaysForecastBinding.bind(view);
-        binding.title1.setText("今日");
-        binding.text1.setText("はれ");
-
-        binding.title2.setText("明日");
-        binding.text2.setText("はれ");
-
-        binding.title3.setText("明後日");
-        binding.text3.setText("はれ");
-
 
         WeatherServiceHolder.get()
                 .getWeather("140010")
@@ -110,7 +102,7 @@ public class DaysForecastFragment extends Fragment {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        Toast.makeText(getContext(), "Ooops, retry", Toast.LENGTH_LONG).show();
                     }
 
                     @Override

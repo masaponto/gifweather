@@ -27,23 +27,12 @@ public class WeatherEntity {
         return forecasts;
     }
 
-    public void setForecasts(List<Forecasts> forecasts) {
-        this.forecasts = forecasts;
-    }
-
     public String getLink() {
         return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
     }
 
     public List<PinpointLocations> getPinpointLocations() {
         return pinpointLocations;
     }
 
-    public void setPinpointLocations(List<PinpointLocations> pinpointLocations) {
-        this.pinpointLocations = pinpointLocations;
-    }
 }
