@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.masato.weatherforecast.api.WeekWeatherServiceHolder;
 import com.example.masato.weatherforecast.databinding.FragmentWeekForecastBinding;
 import com.example.masato.weatherforecast.model.weekweather.Item;
 import com.example.masato.weatherforecast.model.weekweather.WeekWeatherEntity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observer;
@@ -119,27 +121,68 @@ public class WeekForecastFragment extends Fragment {
 
     private void setView(WeekWeatherEntity weekWeatherEntity) {
         List<Item> weekItems = weekWeatherEntity.getItems();
+        List<String> icon_nums = Arrays.asList(getResources().getStringArray(R.array.icon_url));
+        String telop;
+        int ind;
 
-        binding.title1.setText(weekItems.get(1).getTitle());
-        binding.text1.setText(weekItems.get(1).getContent());
 
-        binding.title2.setText(weekItems.get(2).getTitle());
-        binding.text2.setText(weekItems.get(2).getContent());
+        if (weekItems.size() != 9) {
+            Toast.makeText(getContext(), "Ooops, retry", Toast.LENGTH_LONG).show();
+        } else {
+            // todo: try to change
+            binding.title1.setText(weekItems.get(1).getDateData());
+            telop = weekItems.get(1).getTelop();
+            binding.text1.setText(telop);
+            ind = icon_nums.indexOf(telop) + 1;
+            Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon1);
 
-        binding.title3.setText(weekItems.get(3).getTitle());
-        binding.text3.setText(weekItems.get(3).getContent());
+            binding.title2.setText(weekItems.get(2).getDateData());
+            telop = weekItems.get(2).getTelop();
+            binding.text2.setText(telop);
+            ind = icon_nums.indexOf(telop) + 1;
+            Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon2);
 
-        binding.title4.setText(weekItems.get(4).getTitle());
-        binding.text4.setText(weekItems.get(4).getContent());
+            binding.title3.setText(weekItems.get(3).getDateData());
+            telop = weekItems.get(3).getTelop();
+            binding.text3.setText(telop);
+            ind = icon_nums.indexOf(telop) + 1;
+            Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon3);
 
-        binding.title5.setText(weekItems.get(5).getTitle());
-        binding.text5.setText(weekItems.get(5).getContent());
+            binding.title4.setText(weekItems.get(4).getDateData());
+            telop = weekItems.get(4).getTelop();
+            binding.text4.setText(telop);
+            ind = icon_nums.indexOf(telop) + 1;
+            Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon4);
 
-        binding.title6.setText(weekItems.get(6).getTitle());
-        binding.text6.setText(weekItems.get(6).getContent());
+            binding.title5.setText(weekItems.get(5).getDateData());
+            telop = weekItems.get(5).getTelop();
+            binding.text5.setText(telop);
+            ind = icon_nums.indexOf(telop) + 1;
+            Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon5);
 
-        binding.title7.setText(weekItems.get(7).getTitle());
-        binding.text7.setText(weekItems.get(7).getContent());
+            binding.title6.setText(weekItems.get(6).getDateData());
+            telop = weekItems.get(6).getTelop();
+            binding.text6.setText(telop);
+            ind = icon_nums.indexOf(telop) + 1;
+            Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon6);
+
+            binding.title7.setText(weekItems.get(7).getDateData());
+            telop = weekItems.get(7).getTelop();
+            binding.text7.setText(telop);
+            ind = icon_nums.indexOf(telop) + 1;
+            Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon7);
+
+            binding.title8.setText(weekItems.get(8).getDateData());
+            telop = weekItems.get(8).getTelop();
+            binding.text8.setText(telop);
+            ind = icon_nums.indexOf(telop) + 1;
+            Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon8);
+
+        }
+    }
+
+    private String getIconUrl(int ind) {
+        return "http://weather.livedoor.com/img/icon/" + ind + ".gif";
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -12,27 +12,18 @@ import java.util.List;
 public class WeatherEntity {
 
     @Expose
-    @SerializedName("pinpointLocations")
-    private List<PinpointLocations> pinpointLocations;
-
-    @Expose
     @SerializedName("forecasts")
     private List<Forecasts> forecasts;
 
     @Expose
-    @SerializedName("link")
-    private String link;
+    @SerializedName("description")
+    private Descriptions description;
 
     public List<Forecasts> getForecasts() {
         return forecasts;
     }
 
-    public String getLink() {
-        return link;
+    public Descriptions getDescription() {
+        return description;
     }
-
-    public List<PinpointLocations> getPinpointLocations() {
-        return pinpointLocations;
-    }
-
 }

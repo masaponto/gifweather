@@ -26,7 +26,6 @@
                 android:id="@+id/title1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text = "hoge"
                 android:layout_toRightOf="@id/image_icon1"/>
 
             <TextView
@@ -56,7 +55,6 @@
                 android:id="@+id/title2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text = "hoge"
                 android:layout_toRightOf="@id/image_icon2"/>
 
             <TextView
@@ -68,7 +66,6 @@
 
         </RelativeLayout>
 
-
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -76,27 +73,14 @@
             android:layout_weight="1"
             android:gravity="center">
 
-            <ImageView
-                android:id="@+id/image_icon3"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_marginRight="16dp"/>
-
             <TextView
-                android:id="@+id/title3"
+                android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text = "hoge"
-                android:layout_toRightOf="@id/image_icon3"/>
-
-            <TextView
-                android:id="@+id/text3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/title3"
-                android:layout_toRightOf="@id/image_icon3"/>
+                />
 
         </RelativeLayout>
+
 
     </LinearLayout>
 </layout>

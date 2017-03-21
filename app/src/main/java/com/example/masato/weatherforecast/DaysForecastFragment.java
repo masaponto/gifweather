@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,9 @@ import com.example.masato.weatherforecast.api.WeatherServiceHolder;
 import com.example.masato.weatherforecast.databinding.FragmentDaysForecastBinding;
 import com.example.masato.weatherforecast.model.weather.Forecasts;
 import com.example.masato.weatherforecast.model.weather.WeatherEntity;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -112,21 +116,25 @@ public class DaysForecastFragment extends Fragment {
     }
 
     private void setView(WeatherEntity weatherEntity) {
-        Forecasts oneForecasts = weatherEntity.getForecasts().get(0);
-        Forecasts twoForecasts = weatherEntity.getForecasts().get(1);
-        Forecasts threeForecasts = weatherEntity.getForecasts().get(2);
 
-        binding.title1.setText(oneForecasts.getDataLabel());
-        binding.text1.setText(oneForecasts.getTelop());
-        Glide.with(this.getContext()).load(oneForecasts.getImage().getUrl()).into(binding.imageIcon1);
+        if (weatherEntity.getForecasts().size() >= 2) {
+            Forecasts oneForecasts = weatherEntity.getForecasts().get(0);
+            Forecasts twoForecasts = weatherEntity.getForecasts().get(1);
+            String description = weatherEntity.getDescription().getText().replaceAll("\n", "");
 
-        binding.title2.setText(twoForecasts.getDataLabel());
-        binding.text2.setText(twoForecasts.getTelop());
-        Glide.with(this.getContext()).load(twoForecasts.getImage().getUrl()).into(binding.imageIcon2);
+            binding.title1.setText(oneForecasts.getDateData());
+            binding.text1.setText(oneForecasts.getTelop());
+            Glide.with(this.getContext()).load(oneForecasts.getImage().getUrl()).into(binding.imageIcon1);
 
-        binding.title3.setText(threeForecasts.getDataLabel());
-        binding.text3.setText(threeForecasts.getTelop());
-        Glide.with(this.getContext()).load(threeForecasts.getImage().getUrl()).into(binding.imageIcon3);
+            binding.title2.setText(twoForecasts.getDateData());
+            binding.text2.setText(twoForecasts.getTelop());
+            Glide.with(this.getContext()).load(twoForecasts.getImage().getUrl()).into(binding.imageIcon2);
+
+            binding.description.setText(description);
+
+        } else {
+            Toast.makeText(getContext(), "Ooops, retry", Toast.LENGTH_LONG).show();
+        }
 
     }
 

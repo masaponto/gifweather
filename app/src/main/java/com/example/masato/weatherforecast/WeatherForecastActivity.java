@@ -32,7 +32,7 @@ public class WeatherForecastActivity extends AppCompatActivity
 
         TabLayout tabLayout = binding.tabs;
         ViewPager pager = binding.pager;
-        final String[] pageTitle = {"3 days", "1 week"};
+        final String[] pageTitle = {"2 days", "1 week"};
 
         FragmentPagerAdapter adapter  = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override

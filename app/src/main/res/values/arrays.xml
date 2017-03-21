@@ -1,5 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="icon_url">
+        <item>晴れ</item>
+        <item>晴時々曇</item>
+        <item>晴時々雨</item>
+        <item>晴時々雪</item>
+        <item>晴のち曇</item>
+        <item>晴のち雨</item>
+        <item>晴のち雪</item>
+        <item>曇り</item>
+        <item>曇時々晴</item>
+        <item>曇時々雨</item>
+        <item>曇時々雪</item>
+        <item>曇のち晴</item>
+        <item>曇のち雨</item>
+        <item>曇のち雪</item>
+        <item>雨</item>
+        <item>雨時々晴</item>
+        <item>雨時々止</item>
+        <item>雨時々雪</item>
+        <item>雨のち晴</item>
+        <item>雨のち曇</item>
+        <item>雨のち雪</item>
+        <item>雨で暴風</item>
+        <item>雪</item>
+        <item>雪時々晴</item>
+        <item>雪時々止</item>
+        <item>雪時々雨</item>
+        <item>雪のち晴</item>
+        <item>雪のち曇</item>
+        <item>雪のち雨</item>
+        <item>暴風雪</item>
+    </string-array>
+
+
     <string-array name="prefectures">
         <item>道北</item>
         <item>道東</item>

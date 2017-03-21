@@ -48,4 +48,8 @@ public class Forecasts {
         return temperature;
     }
 
+    public String getDateData() {
+        return dataLabel + " " + date;
+    }
+
 }

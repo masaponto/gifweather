@@ -89,4 +89,12 @@ public class Item {
     public List<String> getCategories() {
         return categories;
     }
+
+    public String getDateData() {
+        return title.split(" - ", 0)[3];
+    }
+
+    public String getTelop() {
+        return title.split(" - ", 0)[1];
+    }
 }
