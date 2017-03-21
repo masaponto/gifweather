@@ -35,15 +35,10 @@ import io.reactivex.schedulers.Schedulers;
  * create an instance of this fragment.
  */
 public class DaysForecastFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    //private static final String ARG_PARAM1 = "param1";
-    //private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    //private String mParam1;
-    //private String mParam2;
-    private int page;
+    private static final String PLACE_CODE = "place_code";
+
+    private String placeCode;
 
     private OnFragmentInteractionListener mListener;
     private FragmentDaysForecastBinding binding;
@@ -55,14 +50,14 @@ public class DaysForecastFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param page Parameter 1.
+     * @param placeCode Parameter 1.
      * @return A new instance of fragment DaysForecastFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static DaysForecastFragment newInstance(int page) {
+
+    public static DaysForecastFragment newInstance(String placeCode) {
         DaysForecastFragment fragment = new DaysForecastFragment();
         Bundle args = new Bundle();
-        args.putInt("page", page);
+        args.putString(PLACE_CODE, placeCode);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,7 +66,7 @@ public class DaysForecastFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            page = getArguments().getInt("page");
+            placeCode = getArguments().getString(PLACE_CODE);
         }
     }
 
@@ -86,9 +81,12 @@ public class DaysForecastFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentDaysForecastBinding.bind(view);
+        callApi();
+    }
 
+    public void callApi() {
         WeatherServiceHolder.get()
-                .getWeather("140010")
+                .getWeather(placeCode)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<WeatherEntity>() {
@@ -112,8 +110,8 @@ public class DaysForecastFragment extends Fragment {
 
                     }
                 });
-
     }
+
 
     private void setView(WeatherEntity weatherEntity) {
 

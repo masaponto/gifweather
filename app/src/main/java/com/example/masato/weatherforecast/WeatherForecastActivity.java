@@ -34,14 +34,19 @@ public class WeatherForecastActivity extends AppCompatActivity
         ViewPager pager = binding.pager;
         final String[] pageTitle = {"2 days", "1 week"};
 
+        final String placeCode = "140010";
+
+        final WeekForecastFragment weekForecastFragment = WeekForecastFragment.newInstance(placeCode);
+
         FragmentPagerAdapter adapter  = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return DaysForecastFragment.newInstance(position+1);
+                        return DaysForecastFragment.newInstance(placeCode);
                     case 1:
-                        return WeekForecastFragment.newInstance(position+1);
+                        return weekForecastFragment;
+                        //return WeekForecastFragment.newInstance(placeCode);
                 }
                 return null;
             }

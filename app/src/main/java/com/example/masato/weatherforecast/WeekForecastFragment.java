@@ -38,7 +38,8 @@ import io.reactivex.schedulers.Schedulers;
 public class WeekForecastFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
-    private int page;
+    private static final String PLACE_CODE = "place_code";
+    private String placeCode;
 
     private OnFragmentInteractionListener mListener;
     private FragmentWeekForecastBinding binding;
@@ -51,14 +52,14 @@ public class WeekForecastFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param page Parameter 1.
+     * @param placeCode Parameter 1.
      * @return A new instance of fragment WeekForecastFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static WeekForecastFragment newInstance(int page) {
+
+    public static WeekForecastFragment newInstance(String placeCode) {
         WeekForecastFragment fragment = new WeekForecastFragment();
         Bundle args = new Bundle();
-        args.putInt("page", page);
+        args.putString(PLACE_CODE, placeCode);
         fragment.setArguments(args);
         return fragment;
     }
@@ -67,7 +68,7 @@ public class WeekForecastFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            page = getArguments().getInt("page");
+            placeCode = getArguments().getString(PLACE_CODE);
         }
     }
 
@@ -82,8 +83,11 @@ public class WeekForecastFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentWeekForecastBinding.bind(view);
-        String url = "http://weather.livedoor.com/forecast/rss/area/140010.xml";
+        callApi(placeCode);
+    }
 
+    public void callApi(String placeCode) {
+        String url = "http://weather.livedoor.com/forecast/rss/area/" + placeCode + ".xml";
         WeekWeatherServiceHolder.get()
                 .getWeekWeather(url)
                 .subscribeOn(Schedulers.io())
@@ -116,15 +120,14 @@ public class WeekForecastFragment extends Fragment {
 
                     }
                 });
-
     }
+
 
     private void setView(WeekWeatherEntity weekWeatherEntity) {
         List<Item> weekItems = weekWeatherEntity.getItems();
         List<String> icon_nums = Arrays.asList(getResources().getStringArray(R.array.icon_url));
         String telop;
         int ind;
-
 
         if (weekItems.size() != 9) {
             Toast.makeText(getContext(), "Ooops, retry", Toast.LENGTH_LONG).show();
