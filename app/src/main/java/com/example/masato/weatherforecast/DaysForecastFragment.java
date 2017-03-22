@@ -1,6 +1,7 @@
 package com.example.masato.weatherforecast;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +35,7 @@ public class DaysForecastFragment extends Fragment
     private static final String PLACE_CODE = "place_code";
 
     private String placeCode;
-
+    private SharedPreferences sharedPreferences;
     private SwipeRefreshLayout swipeRefreshLayout;
     private OnFragmentInteractionListener mListener;
     private FragmentDaysForecastBinding binding;
@@ -72,10 +73,10 @@ public class DaysForecastFragment extends Fragment
         binding = FragmentDaysForecastBinding.bind(view);
         swipeRefreshLayout = binding.refresh;
         swipeRefreshLayout.setOnRefreshListener(this);
-        callApi();
+        callApi(placeCode);
     }
 
-    public void callApi() {
+    public void callApi(String placeCode) {
         WeatherServiceHolder.get()
                 .getWeather(placeCode)
                 .subscribeOn(Schedulers.io())
@@ -158,11 +159,26 @@ public class DaysForecastFragment extends Fragment
             @Override
             public void run() {
                 // 更新が終了したらインジケータ非表示
-                callApi();
+
+                sharedPreferences =
+                        getActivity().getSharedPreferences ("select_city", getContext().MODE_PRIVATE);
+                String code = sharedPreferences.getString("id", "130010");
+
+                callApi(code);
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, 2000);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        sharedPreferences =
+                getActivity().getSharedPreferences ("select_city", getContext().MODE_PRIVATE);
+        String code = sharedPreferences.getString("id", "130010");
+        callApi(code);
+    }
+
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

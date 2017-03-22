@@ -2,6 +2,7 @@ package com.example.masato.weatherforecast;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,17 +26,16 @@ public class SettingActivity extends AppCompatActivity {
 
     ActivitySettingBinding binding;
 
+    private SharedPreferences sharedPreferences;
+    private String cityName;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_setting);
 
-        ArrayList<Prefecture> prefectures = loadPrefecture();
-
-        //final ArrayAdapter<String> arrayAdapter =
-        //new ArrayAdapter<>(this, android.R.layout.simple_list_item_1,
-        //getResources().getStringArray(R.array.prefectures));
+        ArrayList<Prefecture> prefectures = PrefectureHolder.get(getApplicationContext());
 
         final ArrayAdapter<Prefecture> arrayAdapter =
                 new PrefectureArrayAdapter(this, R.layout.setting, prefectures);
@@ -45,30 +45,21 @@ public class SettingActivity extends AppCompatActivity {
         binding.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-                Prefecture pref = arrayAdapter.getItem(position);
-                String prefectureName = pref.getPref();
-                startCitySetting(prefectureName, position, pref.getCityNames(), pref.getCityIds());
+                startCitySetting(position);
             }
         });
 
-
     }
 
-    private ArrayList<Prefecture> loadPrefecture() {
-        Gson gson = new Gson();
-        ArrayList<Prefecture> prefList = new ArrayList<>();
-        JsonReader reader;
-        InputStream inputStream = getResources().openRawResource(R.raw.prefecture);
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-        try {
-            reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-            prefList = gson.fromJson(reader, new TypeToken<ArrayList<Prefecture>>(){}.getType());
+        sharedPreferences =
+                getSharedPreferences("select_city", Context.MODE_PRIVATE);
+        cityName = sharedPreferences.getString("name", "東京");
 
-        } catch (UnsupportedEncodingException e ) {
-            e.printStackTrace();
-        }
-
-        return prefList;
+        binding.textView.setText("設定場所: " + cityName);
     }
 
 
@@ -77,10 +68,8 @@ public class SettingActivity extends AppCompatActivity {
         return intent;
     }
 
-    public void startCitySetting(String prefectureName, int prefectureNum,
-                                 List<String> cityNames, List<String> cityIds) {
-        Intent intent = CitySettingActivity.createIntent(
-                this, prefectureName, prefectureNum, cityNames, cityIds);
+    public void startCitySetting(int prefectureNum) {
+        Intent intent = CitySettingActivity.createIntent(this, prefectureNum);
         startActivity(intent);
     }
 

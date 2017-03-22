@@ -15,7 +15,7 @@
 
 
     <TextView
-        android:text="設定場所: 横浜"
+        android:text="設定場所:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"

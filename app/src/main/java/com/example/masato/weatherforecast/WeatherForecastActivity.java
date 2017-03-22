@@ -1,6 +1,8 @@
 package com.example.masato.weatherforecast;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.design.widget.TabLayout;
@@ -20,6 +22,8 @@ public class WeatherForecastActivity extends AppCompatActivity
         DaysForecastFragment.OnFragmentInteractionListener {
 
     private ActivityWeatherForecastBinding binding;
+    private SharedPreferences sharedPreferences;
+    private String placeCode, cityName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,22 +32,26 @@ public class WeatherForecastActivity extends AppCompatActivity
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_weather_forecast);
 
-        binding.placeTitle.setText("横浜の天気");
-
         TabLayout tabLayout = binding.tabs;
         ViewPager pager = binding.pager;
         final String[] pageTitle = {"2 days", "1 week"};
 
-        final String placeCode = "140010";
+        sharedPreferences =
+                getSharedPreferences("select_city", Context.MODE_PRIVATE);
+
+        placeCode = sharedPreferences.getString("id", "130010");
+        cityName = sharedPreferences.getString("name", "東京");
+        binding.placeTitle.setText(cityName + "の天気");
 
         final WeekForecastFragment weekForecastFragment = WeekForecastFragment.newInstance(placeCode);
+        final DaysForecastFragment daysForecastFragment = DaysForecastFragment.newInstance(placeCode);
 
         FragmentPagerAdapter adapter  = new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
                 switch (position) {
                     case 0:
-                        return DaysForecastFragment.newInstance(placeCode);
+                        return daysForecastFragment;
                     case 1:
                         return weekForecastFragment;
                         //return WeekForecastFragment.newInstance(placeCode);
@@ -64,6 +72,18 @@ public class WeatherForecastActivity extends AppCompatActivity
 
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        sharedPreferences =
+                getSharedPreferences("select_city", Context.MODE_PRIVATE);
+
+        placeCode = sharedPreferences.getString("id", "130010");
+        cityName = sharedPreferences.getString("name", "東京");
+        binding.placeTitle.setText(cityName + "の天気");
     }
 
     @Override
