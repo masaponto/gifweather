@@ -1,4 +1,9 @@
 <layout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
               android:orientation="vertical"
@@ -26,7 +31,6 @@
             android:id="@+id/title1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "hoge"
             android:layout_toRightOf="@id/image_icon1"/>
 
         <TextView
@@ -54,7 +58,6 @@
             android:id="@+id/title2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "hoge"
             android:layout_toRightOf="@id/image_icon2"/>
 
         <TextView
@@ -83,7 +86,6 @@
             android:id="@+id/title3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "hoge"
             android:layout_toRightOf="@id/image_icon3"/>
 
         <TextView
@@ -112,7 +114,6 @@
             android:id="@+id/title4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "hoge"
             android:layout_toRightOf="@id/image_icon4"/>
 
         <TextView
@@ -141,7 +142,6 @@
             android:id="@+id/title5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "hoge"
             android:layout_toRightOf="@id/image_icon5"/>
 
         <TextView
@@ -170,7 +170,6 @@
             android:id="@+id/title6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "hoge"
             android:layout_toRightOf="@id/image_icon6"/>
 
         <TextView
@@ -200,7 +199,6 @@
             android:id="@+id/title7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "hoge"
             android:layout_toRightOf="@id/image_icon7"/>
 
         <TextView
@@ -229,7 +227,6 @@
             android:id="@+id/title8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text = "hoge"
             android:layout_toRightOf="@id/image_icon8"/>
 
         <TextView
@@ -241,4 +238,5 @@
 
     </RelativeLayout>
 </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 </layout>

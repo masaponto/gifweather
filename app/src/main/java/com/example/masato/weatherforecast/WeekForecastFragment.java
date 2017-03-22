@@ -3,8 +3,10 @@ package com.example.masato.weatherforecast;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,20 +29,14 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link WeekForecastFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link WeekForecastFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class WeekForecastFragment extends Fragment {
+public class WeekForecastFragment extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener {
 
     // TODO: Rename and change types of parameters
     private static final String PLACE_CODE = "place_code";
     private String placeCode;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private OnFragmentInteractionListener mListener;
     private FragmentWeekForecastBinding binding;
 
@@ -48,13 +44,6 @@ public class WeekForecastFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param placeCode Parameter 1.
-     * @return A new instance of fragment WeekForecastFragment.
-     */
 
     public static WeekForecastFragment newInstance(String placeCode) {
         WeekForecastFragment fragment = new WeekForecastFragment();
@@ -83,6 +72,8 @@ public class WeekForecastFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentWeekForecastBinding.bind(view);
+        swipeRefreshLayout = binding.refresh;
+        swipeRefreshLayout.setOnRefreshListener(this);
         callApi(placeCode);
     }
 
@@ -212,16 +203,18 @@ public class WeekForecastFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // 更新が終了したらインジケータ非表示
+                callApi(placeCode);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 2000);
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

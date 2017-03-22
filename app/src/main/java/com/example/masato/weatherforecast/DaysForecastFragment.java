@@ -3,8 +3,10 @@ package com.example.masato.weatherforecast;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,33 +28,19 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DaysForecastFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DaysForecastFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DaysForecastFragment extends Fragment {
+public class DaysForecastFragment extends Fragment
+        implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String PLACE_CODE = "place_code";
 
     private String placeCode;
 
+    private SwipeRefreshLayout swipeRefreshLayout;
     private OnFragmentInteractionListener mListener;
     private FragmentDaysForecastBinding binding;
     public DaysForecastFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param placeCode Parameter 1.
-     * @return A new instance of fragment DaysForecastFragment.
-     */
 
     public static DaysForecastFragment newInstance(String placeCode) {
         DaysForecastFragment fragment = new DaysForecastFragment();
@@ -74,6 +62,7 @@ public class DaysForecastFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_days_forecast, container, false);
     }
 
@@ -81,6 +70,8 @@ public class DaysForecastFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         binding = FragmentDaysForecastBinding.bind(view);
+        swipeRefreshLayout = binding.refresh;
+        swipeRefreshLayout.setOnRefreshListener(this);
         callApi();
     }
 
@@ -136,6 +127,7 @@ public class DaysForecastFragment extends Fragment {
 
     }
 
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -160,16 +152,18 @@ public class DaysForecastFragment extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
+    @Override
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // 更新が終了したらインジケータ非表示
+                callApi();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 2000);
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
