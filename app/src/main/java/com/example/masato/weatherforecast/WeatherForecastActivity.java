@@ -34,7 +34,7 @@ public class WeatherForecastActivity extends AppCompatActivity
 
         TabLayout tabLayout = binding.tabs;
         ViewPager pager = binding.pager;
-        final String[] pageTitle = {"2 days", "1 week"};
+        final String[] pageTitle = getResources().getStringArray(R.array.page_title);
 
         sharedPreferences =
                 getSharedPreferences("select_city", Context.MODE_PRIVATE);

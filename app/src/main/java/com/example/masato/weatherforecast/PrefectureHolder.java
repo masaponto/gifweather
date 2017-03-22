@@ -10,7 +10,6 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 /**
@@ -30,21 +29,11 @@ public class PrefectureHolder {
 
     private static ArrayList<Prefecture> createInstance(Context context) {
         Log.d("prefectureHolder", "called");
-
         Gson gson = new Gson();
-        ArrayList<Prefecture> prefList = new ArrayList<>();
         JsonReader reader;
         InputStream inputStream = context.getResources().openRawResource(R.raw.prefecture);
-
-        try {
-            reader = new JsonReader(new InputStreamReader(inputStream, "UTF-8"));
-            prefList = gson.fromJson(reader, new TypeToken<ArrayList<Prefecture>>(){}.getType());
-
-        } catch (UnsupportedEncodingException e ) {
-            e.printStackTrace();
-        }
-
-        return prefList;
+        reader = new JsonReader(new InputStreamReader(inputStream));
+        return gson.fromJson(reader, new TypeToken<ArrayList<Prefecture>>(){}.getType());
     }
 
 

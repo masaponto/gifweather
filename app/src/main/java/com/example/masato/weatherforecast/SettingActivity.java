@@ -35,17 +35,21 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_setting);
 
-        ArrayList<Prefecture> prefectures = PrefectureHolder.get(getApplicationContext());
+        //ArrayList<Prefecture> prefectures = PrefectureHolder.get(getApplicationContext());
+        final String[] prefArray = getResources().getStringArray(R.array.prefectures);
 
-        final ArrayAdapter<Prefecture> arrayAdapter =
-                new PrefectureArrayAdapter(this, R.layout.setting, prefectures);
+        //final ArrayAdapter<Prefecture> arrayAdapter =
+        //                new PrefectureArrayAdapter(this, R.layout.setting, prefectures);
+
+        final ArrayAdapter arrayAdapter =
+                new ArrayAdapter(this, android.R.layout.simple_list_item_1, prefArray);
 
         binding.listView.setAdapter(arrayAdapter);
 
         binding.listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
-                startCitySetting(position);
+                startCitySetting(position+1);
             }
         });
 

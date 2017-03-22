@@ -78,7 +78,7 @@ public class WeekForecastFragment extends Fragment
         callApi(placeCode);
     }
 
-    public void callApi(String placeCode) {
+    public void callApi(final String placeCode) {
         String url = "http://weather.livedoor.com/forecast/rss/area/" + placeCode + ".xml";
         WeekWeatherServiceHolder.get()
                 .getWeekWeather(url)
@@ -93,7 +93,7 @@ public class WeekForecastFragment extends Fragment
                     @Override
                     public void onNext(WeekWeatherEntity weekWeatherEntity) {
                         if (weekWeatherEntity.getStatus().equals("error")) {
-                            Log.d("error", weekWeatherEntity.getStatus());
+                            Log.d("error", weekWeatherEntity.getStatus() +  " : " + placeCode);
                         } else {
                             setView(weekWeatherEntity);
                         }
