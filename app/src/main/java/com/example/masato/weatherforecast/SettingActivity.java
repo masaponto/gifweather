@@ -39,10 +39,10 @@ public class SettingActivity extends AppCompatActivity {
         final String[] prefArray = getResources().getStringArray(R.array.prefectures);
 
         //final ArrayAdapter<Prefecture> arrayAdapter =
-        //                new PrefectureArrayAdapter(this, R.layout.setting, prefectures);
+        // new PrefectureArrayAdapter(this, R.layout.setting, prefectures);
 
-        final ArrayAdapter arrayAdapter =
-                new ArrayAdapter(this, android.R.layout.simple_list_item_1, prefArray);
+        final ArrayAdapter<String> arrayAdapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, prefArray);
 
         binding.listView.setAdapter(arrayAdapter);
 
@@ -50,6 +50,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView parent, View view, int position, long id) {
                 startCitySetting(position+1);
+
             }
         });
 
