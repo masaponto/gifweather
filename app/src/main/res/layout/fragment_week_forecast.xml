@@ -10,14 +10,16 @@
               android:divider="@layout/divider"
               android:dividerPadding="20dp"
               android:showDividers="middle"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="com.example.masato.weatherforecast.WeekForecastFragment">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              tools:context="com.example.masato.weatherforecast.WeekForecastFragment">
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -45,6 +47,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -73,6 +76,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -101,6 +105,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -129,6 +134,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -157,6 +163,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_weight="1"
         android:gravity="center">
 
@@ -186,6 +193,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="10dp"
         android:layout_weight="1"
         android:gravity="center">
 
