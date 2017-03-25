@@ -33,7 +33,6 @@ import io.reactivex.schedulers.Schedulers;
 public class WeekForecastFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener {
 
-    // TODO: Rename and change types of parameters
     private static final String PLACE_CODE = "place_code";
     private String placeCode;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -95,6 +94,7 @@ public class WeekForecastFragment extends Fragment
                     public void onNext(WeekWeatherEntity weekWeatherEntity) {
                         if (weekWeatherEntity.getStatus().equals("error")) {
                             Log.d("error", weekWeatherEntity.getStatus() +  " : " + placeCode);
+                            Toast.makeText(getContext(), "失敗", Toast.LENGTH_SHORT).show();
                         } else {
                             setView(weekWeatherEntity);
                         }
@@ -103,9 +103,8 @@ public class WeekForecastFragment extends Fragment
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.d("Er", e.toString());
                         e.printStackTrace();
-                        Toast.makeText(getContext(), "Ooops, retry", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "失敗", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -123,8 +122,9 @@ public class WeekForecastFragment extends Fragment
         int ind;
 
         if (weekItems.size() < 8) {
-            Toast.makeText(getContext(), "Ooops, retry " + weekItems.size(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "失敗" + weekItems.size(), Toast.LENGTH_LONG).show();
         } else {
+
             // todo: try to change
             binding.title1.setText(weekItems.get(1).getDateData());
             telop = weekItems.get(1).getTelop();
@@ -168,12 +168,6 @@ public class WeekForecastFragment extends Fragment
             ind = icon_nums.indexOf(telop) + 1;
             Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon7);
 
-            //binding.title8.setText(weekItems.get(8).getDateData());
-            //telop = weekItems.get(8).getTelop();
-            //binding.text8.setText(telop);
-            //ind = icon_nums.indexOf(telop) + 1;
-            //Glide.with(this.getContext()).load(getIconUrl(ind)).into(binding.imageIcon8);
-
         }
     }
 
@@ -210,7 +204,6 @@ public class WeekForecastFragment extends Fragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // 更新が終了したらインジケータ非表示
                 sharedPreferences = getActivity().getSharedPreferences ("select_city", getContext().MODE_PRIVATE);
                 String code = sharedPreferences.getString("id", "130010");
                 callApi(code);
@@ -224,6 +217,7 @@ public class WeekForecastFragment extends Fragment
         super.onResume();
         sharedPreferences = getActivity().getSharedPreferences ("select_city", getContext().MODE_PRIVATE);
         String code = sharedPreferences.getString("id", "130010");
+        Log.d("place code", code);
         if (!placeCode.equals(code)) {
             callApi(code);
         }

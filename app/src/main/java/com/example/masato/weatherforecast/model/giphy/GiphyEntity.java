@@ -18,11 +18,20 @@ public class GiphyEntity {
     @Expose
     private Pagination pagination;
 
+    @SerializedName("meta")
+    @Expose
+    private MetaInfo meta;
+
+
     public List<GiphyData> getData() {
         return data;
     }
 
     public Pagination getPagination() {
         return pagination;
+    }
+
+    public MetaInfo getMeta() {
+        return meta;
     }
 }

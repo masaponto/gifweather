@@ -153,11 +153,16 @@ public class DaysForecastFragment extends Fragment
 
                     @Override
                     public void onNext(GiphyEntity giphyEntity) {
-                        Random r = new Random();
-                        if(giphyEntity.getPagination().getCount() > 0) {
+
+
+                        if(giphyEntity.getMeta().getStatus() != 200) {
+                            Toast.makeText(getContext(), "失敗", Toast.LENGTH_SHORT).show();
+                        } else if(giphyEntity.getPagination().getCount() > 0) {
+                            Random r = new Random();
                             int ind = r.nextInt(giphyEntity.getPagination().getCount());
                             String url = giphyEntity.getData().get(ind).getImages().getImage().getUrl();
                             getProgressBar(n).setVisibility(View.VISIBLE);
+
                             Glide.with(getContext()).load(url)
                                     .listener(new RequestListener<String, GlideDrawable>() {
                                         @Override
@@ -175,13 +180,14 @@ public class DaysForecastFragment extends Fragment
                                     .into(getWeatherImageView(n));
 
                         } else {
-                            Toast.makeText(getContext(), "Ooops, Something went wrong", Toast.LENGTH_SHORT);
+                            Toast.makeText(getContext(), "失敗", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         e.printStackTrace();
+                        Toast.makeText(getContext(), "失敗", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -272,8 +278,6 @@ public class DaysForecastFragment extends Fragment
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                // 更新が終了したらインジケータ非表示
-
                 sharedPreferences =
                         getActivity().getSharedPreferences ("select_city", getContext().MODE_PRIVATE);
                 String code = sharedPreferences.getString("id", "130010");
@@ -289,6 +293,9 @@ public class DaysForecastFragment extends Fragment
         sharedPreferences =
                 getActivity().getSharedPreferences ("select_city", getContext().MODE_PRIVATE);
         String code = sharedPreferences.getString("id", "130010");
+
+        Log.d("place code", code);
+
         if (!placeCode.equals(code)) {
             setWeather(code);
         }

@@ -25,23 +25,12 @@ public class Prefecture {
         return pref;
     }
 
-    public void setPref(String pref) {
-        this.pref = pref;
-    }
-
     public List<String> getCityNames() {
         return cityNames;
-    }
-
-    public void setCityNames(List<String> cityNames) {
-        this.cityNames = cityNames;
     }
 
     public List<String> getCityIds() {
         return cityIds;
     }
 
-    public void setCityIds(List<String> cityIds) {
-        this.cityIds = cityIds;
-    }
 }
