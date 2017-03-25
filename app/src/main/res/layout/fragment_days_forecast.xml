@@ -26,22 +26,15 @@
 
             <ImageView
                 android:id="@+id/image_icon1"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_marginRight="16dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
 
             <TextView
-                android:id="@+id/title1"
+                android:id="@+id/forecast_text1"
+                android:textAlignment="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/image_icon1"/>
-
-            <TextView
-                android:id="@+id/text1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/title1"
-                android:layout_toRightOf="@id/image_icon1"/>
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 
@@ -56,26 +49,19 @@
 
             <ImageView
                 android:id="@+id/image_icon2"
-                android:layout_width="96dp"
-                android:layout_height="96dp"
-                android:layout_marginRight="16dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
 
             <TextView
-                android:id="@+id/title2"
+                android:id="@+id/forecast_text2"
+                android:textAlignment="center"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/image_icon2"/>
-
-            <TextView
-                android:id="@+id/text2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/title2"
-                android:layout_toRightOf="@id/image_icon2"/>
+                android:layout_height="wrap_content"/>
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <!--<RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -90,7 +76,7 @@
                 />
 
         </RelativeLayout>
-
+        -->
 
     </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>

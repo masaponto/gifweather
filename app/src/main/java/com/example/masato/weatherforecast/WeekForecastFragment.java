@@ -75,7 +75,6 @@ public class WeekForecastFragment extends Fragment
         binding = FragmentWeekForecastBinding.bind(view);
         swipeRefreshLayout = binding.refresh;
         swipeRefreshLayout.setOnRefreshListener(this);
-        callApi(placeCode);
     }
 
     public void callApi(final String placeCode) {
