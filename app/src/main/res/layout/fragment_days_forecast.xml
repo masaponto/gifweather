@@ -34,8 +34,17 @@
                 android:id="@+id/forecast_text1"
                 android:background="@color/white"
                 android:textAlignment="center"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <ProgressBar
+                android:id="@+id/progress1"
+                android:layout_centerInParent="true"
+                android:visibility="visible"
+                android:layout_below="@+id/forecast_text1"
+                android:layout_width="match_parent"
+                android:layout_height="60dp" />
 
         </RelativeLayout>
 
@@ -48,6 +57,14 @@
             android:layout_weight="1"
             android:gravity="center">
 
+            <ProgressBar
+                android:id="@+id/progress2"
+                android:visibility="visible"
+                android:layout_below="@+id/forecast_text2"
+                android:layout_width="match_parent"
+                android:layout_centerInParent="true"
+                android:layout_height="60dp" />
+
             <ImageView
                 android:id="@+id/image_icon2"
                 android:layout_width="match_parent"
@@ -58,6 +75,7 @@
                 android:id="@+id/forecast_text2"
                 android:background="@color/white"
                 android:textAlignment="center"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 

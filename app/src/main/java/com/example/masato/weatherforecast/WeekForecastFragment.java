@@ -82,6 +82,7 @@ public class WeekForecastFragment extends Fragment
         String url = "http://weather.livedoor.com/forecast/rss/area/" + placeCode + ".xml";
         WeekWeatherServiceHolder.get()
                 .getWeekWeather(url)
+                .cache()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<WeekWeatherEntity>() {

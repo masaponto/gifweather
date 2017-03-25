@@ -13,9 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.example.masato.weatherforecast.api.GiphyServiceHolder;
 import com.example.masato.weatherforecast.api.WeatherServiceHolder;
 import com.example.masato.weatherforecast.databinding.FragmentDaysForecastBinding;
@@ -72,8 +76,12 @@ public class DaysForecastFragment extends Fragment
         return inflater.inflate(R.layout.fragment_days_forecast, container, false);
     }
 
-    public ImageView getWeatherImageView(int n) {
+    private ImageView getWeatherImageView(int n) {
         return n == 0 ? binding.imageIcon1 : binding.imageIcon2;
+    }
+
+    private ProgressBar getProgressBar(int n) {
+        return n == 0 ? binding.progress1 : binding.progress2;
     }
 
 
@@ -86,13 +94,13 @@ public class DaysForecastFragment extends Fragment
         setWeather(placeCode);
     }
 
-    public void setWeather(String code) {
+    private void setWeather(String code) {
         setForecastText(code);
         setGiphy(code, 0);
         setGiphy(code, 1);
     }
 
-    public void setForecastText(String placeCode) {
+    private void setForecastText(String placeCode) {
         callWeatherApi(placeCode)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -125,6 +133,7 @@ public class DaysForecastFragment extends Fragment
 
 
     public void setGiphy(String placeCode, final int n) {
+
         callWeatherApi(placeCode)
                 .flatMap(new Function<WeatherEntity, Observable<GiphyEntity>>() {
                     @Override
@@ -148,7 +157,23 @@ public class DaysForecastFragment extends Fragment
                         if(giphyEntity.getPagination().getCount() > 0) {
                             int ind = r.nextInt(giphyEntity.getPagination().getCount());
                             String url = giphyEntity.getData().get(ind).getImages().getImage().getUrl();
-                            Glide.with(getContext()).load(url).into(getWeatherImageView(n));
+                            getProgressBar(n).setVisibility(View.VISIBLE);
+                            Glide.with(getContext()).load(url)
+                                    .listener(new RequestListener<String, GlideDrawable>() {
+                                        @Override
+                                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                            getProgressBar(n).setVisibility(View.GONE);
+                                            return false;
+                                        }
+
+                                        @Override
+                                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                            getProgressBar(n).setVisibility(View.GONE);
+                                            return false;
+                                        }
+                                    })
+                                    .into(getWeatherImageView(n));
+
                         } else {
                             Toast.makeText(getContext(), "Ooops, Something went wrong", Toast.LENGTH_SHORT);
                         }
