@@ -9,23 +9,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by masato on 17/03/25.
  */
 
-public class FlickrServiceHolder {
+public class GiphyServiceHolder {
 
-    private static FlickrService INSTANCE;
+    private static GiphyService INSTANCE;
 
-    public static FlickrService get () {
+    public static GiphyService get () {
         if (INSTANCE == null) {
             INSTANCE = createInstance();
         }
         return INSTANCE;
     }
 
-    private static FlickrService createInstance() {
-        return retrofit().create(FlickrService.class);
+    private static GiphyService createInstance() {
+        return retrofit().create(GiphyService.class);
     }
 
     private static Retrofit retrofit() {
-        final String ENDPOINT = "https://api.flickr.com/";
+        final String ENDPOINT = "http://api.giphy.com/";
         return new Retrofit.Builder()
                 .baseUrl(ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())

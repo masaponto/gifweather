@@ -8,45 +8,35 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.masato.weatherforecast.api.FlickrService;
-import com.example.masato.weatherforecast.api.FlickrServiceHolder;
-import com.example.masato.weatherforecast.api.WeatherService;
+import com.example.masato.weatherforecast.api.GiphyServiceHolder;
 import com.example.masato.weatherforecast.api.WeatherServiceHolder;
 import com.example.masato.weatherforecast.databinding.FragmentDaysForecastBinding;
-import com.example.masato.weatherforecast.model.flickr.FlickrPhotoEntity;
-import com.example.masato.weatherforecast.model.flickr.Photo;
+import com.example.masato.weatherforecast.model.giphy.GiphyEntity;
 import com.example.masato.weatherforecast.model.weather.Forecasts;
 import com.example.masato.weatherforecast.model.weather.WeatherEntity;
 
 import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-import kotlin.jvm.functions.Function14;
 
 
 public class DaysForecastFragment extends Fragment
         implements SwipeRefreshLayout.OnRefreshListener {
 
     private static final String PLACE_CODE = "place_code";
-    private static final String API_KEY = "67273c34399ef16bd17411d01bca05cf";
+    private static final String API_KEY = "dc6zaTOxFJmzC";
     private String placeCode;
     private SharedPreferences sharedPreferences;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -97,8 +87,8 @@ public class DaysForecastFragment extends Fragment
 
     public void setWeather(String code) {
         setForecastText(code);
-        setFlickrPhoto(code, 0);
-        setFlickrPhoto(code, 1);
+        setGiphy(code, 0);
+        setGiphy(code, 1);
     }
 
     public void setForecastText(String placeCode) {
@@ -133,20 +123,18 @@ public class DaysForecastFragment extends Fragment
     }
 
 
-    public void setFlickrPhoto(String placeCode, final int n) {
+    public void setGiphy(String placeCode, final int n) {
         callWeatherApi(placeCode)
-                .flatMap(new Function<WeatherEntity, Observable<FlickrPhotoEntity>>() {
+                .flatMap(new Function<WeatherEntity, Observable<GiphyEntity>>() {
                     @Override
-                    public Observable<FlickrPhotoEntity> apply(@NonNull WeatherEntity weatherEntity) throws Exception {
-                        int page = 1;
+                    public Observable<GiphyEntity> apply(@NonNull WeatherEntity weatherEntity) throws Exception {
                         Forecasts Forecasts = weatherEntity.getForecasts().get(n);
-
-                        return callFlickrPhotoApi(API_KEY, toEnglish(Forecasts.getTelop()), page);
+                        return callGiphyApi(API_KEY, toEnglish(Forecasts.getTelop()));
                     }
                 })
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<FlickrPhotoEntity>() {
+                .subscribe(new Observer<GiphyEntity>() {
 
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -154,12 +142,11 @@ public class DaysForecastFragment extends Fragment
                     }
 
                     @Override
-                    public void onNext(FlickrPhotoEntity flickrPhotoEntity) {
+                    public void onNext(GiphyEntity giphyEntity) {
                         Random r = new Random();
-                        int range = flickrPhotoEntity.getPhotos().getPhoto().size();
-                        int ind = r.nextInt(range);
-                        Photo photo = flickrPhotoEntity.getPhotos().getPhoto().get(ind);
-                        Glide.with(getContext()).load(getPhotoUrl(photo)).into(getWeatherImageView(n));
+                        int ind = r.nextInt(giphyEntity.getPagination().getCount());
+                        String url = giphyEntity.getData().get(ind).getImages().getImage().getUrl();
+                        Glide.with(getContext()).load(url).into(getWeatherImageView(n));
                     }
 
                     @Override
@@ -176,36 +163,42 @@ public class DaysForecastFragment extends Fragment
     }
 
     private String toEnglish(String str) {
+        Random rnd = new Random();
+        int r = rnd.nextInt(2);
 
         if (str.contains("雪")) {
-            return "snow";
+            if (r == 0) {
+                return "glacier";
+            } else {
+                return "snow";
+            }
         } else if(str.contains("雨")) {
-            return "rain";
+            if (r == 0) {
+                return "rain";
+            } else {
+                return "umbrella";
+            }
         }
+
 
         String jpStr = str.substring(0,1);
         if(jpStr.equals("晴")) {
-            return "sunny day";
+            if (r == 0) {
+                return "sun";
+            } else {
+                return "sunny";
+            }
         } else if (jpStr.equals("雲")) {
-            return "cloud";
+            if (r == 0) {
+                return "cloud";
+            } else {
+                return "fog";
+            }
         } else {
             return jpStr;
         }
     }
 
-    private String getPhotoUrl(Photo photo) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("https://farm");
-        stringBuilder.append(photo.getFarm());
-        stringBuilder.append(".staticflickr.com/");
-        stringBuilder.append(photo.getServer());
-        stringBuilder.append("/");
-        stringBuilder.append(photo.getId());
-        stringBuilder.append("_");
-        stringBuilder.append(photo.getSecret());
-        stringBuilder.append(".jpg");
-        return stringBuilder.toString();
-    }
 
     private Observable<WeatherEntity> callWeatherApi(String placeCode) {
         return WeatherServiceHolder.get()
@@ -213,9 +206,9 @@ public class DaysForecastFragment extends Fragment
                 .cache();
     }
 
-    private Observable<FlickrPhotoEntity> callFlickrPhotoApi(String apiKey, String text, int page) {
-        return FlickrServiceHolder.get()
-                .getFlickrPhoto(apiKey, text, page);
+    private Observable<GiphyEntity> callGiphyApi(String apiKey, String text) {
+        return GiphyServiceHolder.get()
+                .getGif(apiKey, text);
     }
 
 
