@@ -75,6 +75,7 @@ public class WeekForecastFragment extends Fragment
         binding = FragmentWeekForecastBinding.bind(view);
         swipeRefreshLayout = binding.refresh;
         swipeRefreshLayout.setOnRefreshListener(this);
+        callApi(placeCode);
     }
 
     public void callApi(final String placeCode) {
@@ -222,7 +223,9 @@ public class WeekForecastFragment extends Fragment
         super.onResume();
         sharedPreferences = getActivity().getSharedPreferences ("select_city", getContext().MODE_PRIVATE);
         String code = sharedPreferences.getString("id", "130010");
-        callApi(code);
+        if (!placeCode.equals(code)) {
+            callApi(code);
+        }
     }
 
     public interface OnFragmentInteractionListener {

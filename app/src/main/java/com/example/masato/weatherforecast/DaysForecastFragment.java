@@ -8,10 +8,12 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.masato.weatherforecast.api.GiphyServiceHolder;
@@ -81,8 +83,7 @@ public class DaysForecastFragment extends Fragment
         binding = FragmentDaysForecastBinding.bind(view);
         swipeRefreshLayout = binding.refresh;
         swipeRefreshLayout.setOnRefreshListener(this);
-
-        //setWeather(placeCode);
+        setWeather(placeCode);
     }
 
     public void setWeather(String code) {
@@ -144,9 +145,13 @@ public class DaysForecastFragment extends Fragment
                     @Override
                     public void onNext(GiphyEntity giphyEntity) {
                         Random r = new Random();
-                        int ind = r.nextInt(giphyEntity.getPagination().getCount());
-                        String url = giphyEntity.getData().get(ind).getImages().getImage().getUrl();
-                        Glide.with(getContext()).load(url).into(getWeatherImageView(n));
+                        if(giphyEntity.getPagination().getCount() > 0) {
+                            int ind = r.nextInt(giphyEntity.getPagination().getCount());
+                            String url = giphyEntity.getData().get(ind).getImages().getImage().getUrl();
+                            Glide.with(getContext()).load(url).into(getWeatherImageView(n));
+                        } else {
+                            Toast.makeText(getContext(), "Ooops, Something went wrong", Toast.LENGTH_SHORT);
+                        }
                     }
 
                     @Override
@@ -188,14 +193,14 @@ public class DaysForecastFragment extends Fragment
             } else {
                 return "sunny";
             }
-        } else if (jpStr.equals("雲")) {
+        } else if (jpStr.equals("曇")) {
             if (r == 0) {
                 return "cloud";
             } else {
                 return "fog";
             }
         } else {
-            return jpStr;
+            return "Sky";
         }
     }
 
@@ -259,7 +264,9 @@ public class DaysForecastFragment extends Fragment
         sharedPreferences =
                 getActivity().getSharedPreferences ("select_city", getContext().MODE_PRIVATE);
         String code = sharedPreferences.getString("id", "130010");
-        setWeather(code);
+        if (!placeCode.equals(code)) {
+            setWeather(code);
+        }
     }
 
 
