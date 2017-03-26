@@ -14,5 +14,5 @@ public interface GiphyService {
 
     @GET("/v1/gifs/random")
     public Observable<GiphyEntity> getGif(@Query("api_key") String apiKey,
-                                                  @Query("tag") String tag);
+                                          @Query("tag") String tag);
 }
