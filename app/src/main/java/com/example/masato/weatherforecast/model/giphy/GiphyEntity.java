@@ -12,23 +12,15 @@ import java.util.List;
 public class GiphyEntity {
     @SerializedName("data")
     @Expose
-    private List<GiphyData> data;
-
-    @SerializedName("pagination")
-    @Expose
-    private Pagination pagination;
+    private GiphyData data;
 
     @SerializedName("meta")
     @Expose
     private MetaInfo meta;
 
 
-    public List<GiphyData> getData() {
+    public GiphyData getData() {
         return data;
-    }
-
-    public Pagination getPagination() {
-        return pagination;
     }
 
     public MetaInfo getMeta() {

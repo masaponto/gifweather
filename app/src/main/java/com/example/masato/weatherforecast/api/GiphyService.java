@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface GiphyService {
 
-    @GET("/v1/gifs/search")
+    @GET("/v1/gifs/random")
     public Observable<GiphyEntity> getGif(@Query("api_key") String apiKey,
-                                                  @Query("q") String text);
+                                                  @Query("tag") String tag);
 }

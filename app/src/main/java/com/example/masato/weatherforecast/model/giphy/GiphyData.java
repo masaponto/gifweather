@@ -8,12 +8,12 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class GiphyData {
-    @SerializedName("images")
+    @SerializedName("fixed_height_downsampled_url")
     @Expose
-    private GifImages images;
+    private String url;
 
-    public GifImages getImages() {
-        return images;
+    public String getUrl() {
+        return url;
     }
 }
 

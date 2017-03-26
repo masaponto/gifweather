@@ -154,34 +154,27 @@ public class DaysForecastFragment extends Fragment
                     @Override
                     public void onNext(GiphyEntity giphyEntity) {
 
+                        //Random r = new Random();
+                        //int ind = r.nextInt(giphyEntity.getPagination().getCount());
+                        //String url = giphyEntity.getData().get(ind).getImages().getImage().getUrl();
+                        getProgressBar(n).setVisibility(View.VISIBLE);
 
-                        if(giphyEntity.getMeta().getStatus() != 200) {
-                            Toast.makeText(getContext(), "失敗", Toast.LENGTH_SHORT).show();
-                        } else if(giphyEntity.getPagination().getCount() > 0) {
-                            Random r = new Random();
-                            int ind = r.nextInt(giphyEntity.getPagination().getCount());
-                            String url = giphyEntity.getData().get(ind).getImages().getImage().getUrl();
-                            getProgressBar(n).setVisibility(View.VISIBLE);
+                        Glide.with(getContext()).load(giphyEntity.getData().getUrl())
+                                .listener(new RequestListener<String, GlideDrawable>() {
+                                    @Override
+                                    public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                                        getProgressBar(n).setVisibility(View.GONE);
+                                        return false;
+                                    }
 
-                            Glide.with(getContext()).load(url)
-                                    .listener(new RequestListener<String, GlideDrawable>() {
-                                        @Override
-                                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                                            getProgressBar(n).setVisibility(View.GONE);
-                                            return false;
-                                        }
+                                    @Override
+                                    public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                                        getProgressBar(n).setVisibility(View.GONE);
+                                        return false;
+                                    }
+                                })
+                                .into(getWeatherImageView(n));
 
-                                        @Override
-                                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                                            getProgressBar(n).setVisibility(View.GONE);
-                                            return false;
-                                        }
-                                    })
-                                    .into(getWeatherImageView(n));
-
-                        } else {
-                            Toast.makeText(getContext(), "失敗", Toast.LENGTH_SHORT).show();
-                        }
                     }
 
                     @Override
@@ -231,7 +224,7 @@ public class DaysForecastFragment extends Fragment
                 return "fog";
             }
         } else {
-            return "Sky";
+            return "sky";
         }
     }
 
