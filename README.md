@@ -1,5 +1,5 @@
 # gifweather
-- Weather forecast + GIF 
+Japanese weather forecast + awesome GIF animation for Android 
 
 ## Used
 ### API
