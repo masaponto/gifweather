@@ -1,7 +1,7 @@
 # gifweather
 Japanese weather forecast + awesome GIF animation for Android 
 
-![ss](./ss.png)
+<img src="./ss.png" width="320px">
 
 ## Used
 ### API
