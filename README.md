@@ -1,6 +1,8 @@
 # gifweather
 Japanese weather forecast + awesome GIF animation for Android 
 
+![ss](./ss.png)
+
 ## Used
 ### API
 - livedoor Weather hacks (http://weather.livedoor.com/weather_hacks/)
@@ -11,5 +13,5 @@ Japanese weather forecast + awesome GIF animation for Android
 - Retrofit 2.2.0
 - glide 3.7.0
 
-### License
+## License
 - MIT
